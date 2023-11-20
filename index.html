@@ -1,1 +1,105 @@
+<!-- JavaScript no index.html
+Estrutura de decisão - Define uma saudação dependendo da hora do dia.
+Função e alteração de css pelo JavaScript - função mudarCor() que adiciona uma classe "cor-alternativa" a um elemento com o ID "mensagem".
+Chama a função mudarCor() para alterar a cor ao carregar a página.
+- Seleciona elementos do formulário e obtém dados armazenados localmente.
+- Se há uma chave na URL, preenche os campos com os dados correspondentes.
+- Declara a função salvar() para salvar os dados do formulário localmente. 
+
+JavaScript na tabela.html
+- Seleciona a tabela pelo ID.
+- Obtém dados armazenados localmente.
+- Declara a função mostrarDados() e utiliza estrutura de laço de repetição (forEach) para preencher a tabela com os dados.
+- Declara a função remover() para remover um item da lista
+- Chama a função mostrarDados() para exibir os dados na tabela. -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter</title>
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    
+     <header>
+      <div class="centered">
+        <p id="mensagem"></p>
+     
+       <p> Você é fascinado pelo mundo da tecnologia, programação e inovação? Quer ficar por dentro das últimas tendências, dicas valiosas e descobrir as histórias mais inspiradoras do cenário tech? Não procure mais! Estamos empolgados em apresentar nossa newsletter exclusiva, repleta de conteúdo fresco e envolvente sobre o fascinante universo da tecnologia e programação.</p>
+       <p id="titulo">Assine Nossa Newsletter e Explore o Universo da Tecnologia e Programação!</p>
+     </header>
+     <main>
+      <section class="conteudo-principal">
+      
+        <div id="container">
+        <h1>Preencha suas informações para assinar nossa Newsletter!</h1>
+            <form id="form">
+            <span class="block">
+             <label for="nome">Nome:</label>
+             <input type="text" name="nome" id="nome">
+            </span>
+            <span class="block">
+             <label for="email">E-mail:</label>
+             <input type="text" name="email" id="email">
+            </span>
+            <div class="button-salvar">
+            <button class="salvar" type="submit" onclick="salvar()">Salvar</button>
+            </div>
+        </div>
+
+        </form>
+      </div>
+      </section>
+     </main>
+     <footer>
+        <a href="./tabela.html">Ver Tabela</a>
+     </footer>
+
+    <script>
+        let horaAtual = new Date().getHours();
+        if (horaAtual < 12) {
+            document.getElementById('mensagem').innerText = 'Bom dia!';
+        } else if (horaAtual < 18) {
+            document.getElementById('mensagem').innerText = 'Boa tarde!';
+        } else {
+            document.getElementById('mensagem').innerText = 'Boa noite!';
+        }
+
+        function mudarCor() {
+            let elemento = document.getElementById('mensagem');
+            elemento.classList.add('cor-alternativa');
+        }
+
+        mudarCor(); 
+
+        const form = document.getElementById("form");
+        const nome = document.getElementById("nome");
+        const email = document.getElementById("email");
+        const key = new URLSearchParams(window.location.search).get("chave");
+
+        var dados = JSON.parse(localStorage.getItem("dados")) || [];
+
+        if(key){
+            nome.value = dados[key].nome;
+            email.value = dados[key].email;
+        }
+    
+        function salvar(){
+            let novoNome = nome.value;
+            let novoEmail = email.value;
+            if(key){
+                dados[key] = {nome: novoNome, email: novoEmail};
+            }else{
+                dados.push({nome: novoNome,email: novoEmail});
+            }
+            localStorage.setItem("dados", JSON.stringify(dados));
+            form.reset();
+        }
+
+    </script>
+</body>
+</html>
 
